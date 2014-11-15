@@ -1,0 +1,26 @@
+{
+    "name": "angular-ice",
+    "version": "0.1.0",
+    "authors": [
+        "bverbist"
+    ],
+    "description": "AngularJS input form directives",
+    "main": "./angular-ice.js",
+    "ignore": [
+        "conf",
+        "Gruntfile.js",
+        "LICENSE",
+        "README.md",
+        "package.json"
+    ],
+    "dependencies": {
+        "angular": ">=1.2"
+    },
+    "keywords": [
+        "angular",
+        "angular-ice",
+        "form",
+        "directives"
+    ],
+    "license": "MIT"
+}
