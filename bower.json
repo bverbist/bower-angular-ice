@@ -8,6 +8,8 @@
     "main": "./angular-ice.js",
     "ignore": [
         "conf",
+        ".bowerrc",
+        ".gitignore",
         "Gruntfile.js",
         "LICENSE",
         "README.md",
