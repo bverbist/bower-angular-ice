@@ -48,10 +48,14 @@ module.exports = function (grunt) {
         'default'
     ]);
 
-    grunt.registerTask('release', function(majorMinorPatch) {
-        grunt.task.run([
-            'jshint',
-            'release:' + majorMinorPatch
-        ]);
-    });
+    // grunt release:major
+    // grunt release:minor
+    // grunt release:patch
+
+//    grunt.registerTask('release', function(majorMinorPatch) {
+//        grunt.task.run([
+//            'jshint',
+//            'release:' + majorMinorPatch
+//        ]);
+//    });
 };
