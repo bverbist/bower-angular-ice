@@ -4,7 +4,7 @@
   "authors": [
     "bverbist"
   ],
-  "description": "AngularJS input form directives",
+  "description": "AngularJS unit test helper and input form directives",
   "main": "./angular-ice.js",
   "ignore": [
     "conf",
@@ -21,6 +21,9 @@
   "keywords": [
     "angular",
     "angular-ice",
+    "unitTester",
+    "iceUnitTester",
+    "helper",
     "form",
     "directives"
   ],
