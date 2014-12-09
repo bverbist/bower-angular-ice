@@ -4,7 +4,7 @@
   "authors": [
     "bverbist"
   ],
-  "description": "AngularJS unit test helper and input form directives",
+  "description": "AngularJS unit test helper, protractor base PageObject and input form directives",
   "main": "./angular-ice.js",
   "ignore": [
     "conf",
@@ -24,8 +24,10 @@
     "unitTester",
     "iceUnitTester",
     "helper",
+	"page",
+	"PageObject",
     "form",
-    "directives"
+    "directive"
   ],
   "license": "MIT"
 }
