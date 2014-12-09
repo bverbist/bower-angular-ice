@@ -1,6 +1,6 @@
 {
   "name": "angular-ice",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "authors": [
     "bverbist"
   ],
@@ -24,8 +24,8 @@
     "unitTester",
     "iceUnitTester",
     "helper",
-	"page",
-	"PageObject",
+    "page",
+    "PageObject",
     "form",
     "directive"
   ],
