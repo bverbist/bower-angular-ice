@@ -81,9 +81,9 @@ var iceUnit = (function() {
                 case 4:
                     successCallback = a3;
                     errorCallback = a4;
-                    //fallthrough
+                //fallthrough
                 case 3:
-                    //fallthrough
+                //fallthrough
                 case 2:
                     if (isFunction(a2)) {
                         if (isFunction(a1)) {
@@ -292,6 +292,7 @@ var iceUnit = (function() {
         this.injectionLocals = {};
         this.loadModule = true;
         this.bindings = {};
+        this.initializeImmediately = true;
     }
 
     ComponentControllerScopeBuilder.prototype.withMock = function(injectKey, mock) {
@@ -311,6 +312,11 @@ var iceUnit = (function() {
 
     ComponentControllerScopeBuilder.prototype.withBindings = function(bindings){
         this.bindings = bindings;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.initializeImmediately = function(initializeImmediately){
+        this.initializeImmediately = initializeImmediately;
         return this;
     };
 
@@ -334,9 +340,13 @@ var iceUnit = (function() {
 
         this.injectionLocals.$scope = $scope;
 
-        $componentController(this.controllerName, this.injectionLocals, this.bindings);
+        var controller = $componentController(this.controllerName, this.injectionLocals, this.bindings);
 
-        return $scope;
+        if(initializeImmediately && controller.$onInit) {
+            controller.$onInit();
+        }
+
+        return controller;
     };
 
     function ServiceBuilder(moduleName, serviceName) {
