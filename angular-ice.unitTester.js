@@ -81,9 +81,9 @@ var iceUnit = (function() {
                 case 4:
                     successCallback = a3;
                     errorCallback = a4;
-                    //fallthrough
+                //fallthrough
                 case 3:
-                    //fallthrough
+                //fallthrough
                 case 2:
                     if (isFunction(a2)) {
                         if (isFunction(a1)) {
@@ -285,6 +285,70 @@ var iceUnit = (function() {
         return $scope;
     };
 
+    function ComponentControllerScopeBuilder(moduleName, controllerName) {
+        this.moduleName = moduleName;
+        this.controllerName = controllerName;
+        this.parentScope = null;
+        this.injectionLocals = {};
+        this.loadModule = true;
+        this.bindings = {};
+        this.initializeImmediately = true;
+    }
+
+    ComponentControllerScopeBuilder.prototype.withMock = function(injectKey, mock) {
+        this.injectionLocals[injectKey] = mock;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.withParentScope = function(parentScopeObject) {
+        this.parentScope = parentScopeObject;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.skipModuleLoad = function() {
+        this.loadModule = false;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.withBindings = function(bindings){
+        this.bindings = bindings;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.initializeImmediately = function(initializeImmediately){
+        this.initializeImmediately = initializeImmediately;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.build = function() {
+        if (this.loadModule === true) {
+            angular.mock.module(this.moduleName);
+        }
+
+        var $componentController = injectService('$componentController');
+        var $rootScope = injectService('$rootScope');
+
+        var $scope;
+
+        if (this.parentScope === null) {
+            $scope = $rootScope.$new();
+        } else {
+            var $parent = $rootScope.$new();
+            angular.extend($parent, this.parentScope);
+            $scope = $parent.$new();
+        }
+
+        this.injectionLocals.$scope = $scope;
+
+        var controller = $componentController(this.controllerName, this.injectionLocals, this.bindings);
+
+        if(this.initializeImmediately && controller.$onInit) {
+            controller.$onInit();
+        }
+
+        return controller;
+    };
+
     function ServiceBuilder(moduleName, serviceName) {
         this.moduleName = moduleName;
         this.serviceName = serviceName;
@@ -483,6 +547,15 @@ var iceUnit = (function() {
                 return undefined;
             }
             return new ControllerScopeBuilder(moduleName, controllerName);
+        },
+        componentControllerScope: function(moduleName, controllerName) {
+            if (typeof moduleName === 'undefined') {
+                return undefined;
+            }
+            if (typeof controllerName === 'undefined') {
+                return undefined;
+            }
+            return new ComponentControllerScopeBuilder(moduleName, controllerName);
         },
         service: function(moduleName, serviceName) {
             if (typeof moduleName === 'undefined') {
