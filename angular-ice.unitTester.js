@@ -291,6 +291,7 @@ var iceUnit = (function() {
         this.parentScope = null;
         this.injectionLocals = {};
         this.loadModule = true;
+        this.bindings = {};
     }
 
     ComponentControllerScopeBuilder.prototype.withMock = function(injectKey, mock) {
@@ -305,6 +306,11 @@ var iceUnit = (function() {
 
     ComponentControllerScopeBuilder.prototype.skipModuleLoad = function() {
         this.loadModule = false;
+        return this;
+    };
+
+    ComponentControllerScopeBuilder.prototype.withBindings = function(bindings){
+        this.bindings = bindings;
         return this;
     };
 
@@ -328,7 +334,7 @@ var iceUnit = (function() {
 
         this.injectionLocals.$scope = $scope;
 
-        $componentController(this.controllerName, this.injectionLocals);
+        $componentController(this.controllerName, this.injectionLocals, this.bindings);
 
         return $scope;
     };
