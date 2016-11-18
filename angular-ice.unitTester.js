@@ -342,7 +342,7 @@ var iceUnit = (function() {
 
         var controller = $componentController(this.controllerName, this.injectionLocals, this.bindings);
 
-        if(initializeImmediately && controller.$onInit) {
+        if(this.initializeImmediately && controller.$onInit) {
             controller.$onInit();
         }
 
